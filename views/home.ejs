@@ -1,0 +1,94 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+    .landing-page {
+        margin: 2rem auto 4rem;
+    }
+
+    .landing-hero {
+        min-height: 32rem;
+        display: flex;
+        align-items: center;
+        padding: 4rem;
+        border-radius: 1.5rem;
+        color: white;
+        background:
+            linear-gradient(90deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.12)),
+            url("https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1800&q=85")
+            center / cover;
+    }
+
+    .landing-content {
+        max-width: 38rem;
+    }
+
+    .landing-content h1 {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        font-weight: 700;
+        line-height: 1.05;
+    }
+
+    .landing-content p {
+        font-size: 1.15rem;
+    }
+
+    .landing-btn {
+        background-color: #fe424d;
+        border: none;
+        color: white;
+        font-weight: 600;
+    }
+
+    .landing-btn:hover {
+        background-color: #e53843;
+        color: white;
+    }
+
+    .feature-card {
+        height: 100%;
+        padding: 1.5rem;
+        border: 1px solid #eee;
+        border-radius: 1rem;
+    }
+
+    .feature-card i {
+        color: #fe424d;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<main class="landing-page">
+    <section class="landing-hero">
+        <div class="landing-content">
+            <p class="text-uppercase fw-semibold mb-2">Find your next escape</p>
+            <h1>Stay somewhere unforgettable.</h1>
+            <p class="my-4">Discover welcoming homes, beautiful destinations, and stays made for your kind of trip.</p>
+            <a class="btn landing-btn btn-lg px-4" href="/listings">Explore stays</a>
+        </div>
+    </section>
+
+    <section class="row g-4 mt-4">
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="fa-solid fa-compass"></i>
+                <h3>Explore freely</h3>
+                <p class="mb-0">Browse inspiring stays in destinations around the world.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="fa-solid fa-house"></i>
+                <h3>Feel at home</h3>
+                <p class="mb-0">Choose a place with the space and comfort your trip deserves.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-card">
+                <i class="fa-solid fa-heart"></i>
+                <h3>Make memories</h3>
+                <p class="mb-0">Find a stay that turns your next journey into a story.</p>
+            </div>
+        </div>
+    </section>
+</main>

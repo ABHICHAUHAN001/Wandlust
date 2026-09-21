@@ -2,11 +2,15 @@ if (process.env.NODE_ENV != "production") {
     require("dotenv").config({ quiet: true });
 }
 
-const dns = require("dns");
-dns.setServers(["8.8.8.8", "1.1.1.1"]);
+if (process.env.MONGODB_DNS_SERVER) {
+    require("dns").setServers([process.env.MONGODB_DNS_SERVER]);
+}
 
 const express = require("express");
 const app = express();
+if (process.env.NODE_ENV === "production") {
+    app.set("trust proxy", 1);
+}
 const mongoose = require("mongoose");
 const path = require("path");  
 const methodOverride = require("method-override");
@@ -56,11 +60,12 @@ const sessionOptions = {
     store,
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
     }
 }
 
@@ -100,6 +105,9 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 
+app.get("/", (req, res) => {
+    res.render("home.ejs");
+});
 
 // 404 Handler
 app.use((req, res, next) => {
