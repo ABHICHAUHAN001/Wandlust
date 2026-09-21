@@ -19,15 +19,30 @@ const initDB = async () => {
 
     await mongoose.connect(dbUrl);
 
-    let owner = await User.findOne({ username: "seed-owner" });
+    const adminUsername = process.env.ADMIN_USERNAME;
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminUsername || !adminEmail || !adminPassword) {
+        throw new Error(
+            "ADMIN_USERNAME, ADMIN_EMAIL, and ADMIN_PASSWORD must be configured"
+        );
+    }
+
+    let owner = await User.findOne({ username: adminUsername });
     if (!owner) {
         owner = await User.register(
             new User({
-                username: "seed-owner",
-                email: "seed-owner@example.com",
+                username: adminUsername,
+                email: adminEmail,
+                role: "admin",
             }),
-            "seed-owner-password"
+            adminPassword
         );
+    } else {
+        owner.email = adminEmail;
+        owner.role = "admin";
+        await owner.setPassword(adminPassword);
+        await owner.save();
     }
 
     const listings = initData.data.map((listing) => ({
